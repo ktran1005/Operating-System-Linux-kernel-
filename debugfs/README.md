@@ -32,5 +32,5 @@ When your module is unloaded, it should remove any vix devices that are still in
  **IMPORTANT**: Don't forget that multiple processes could attempt to reador write to your **devices** file in debugfs at the same time! Be sure to protect it using a
 **spinlock** when accessing it. You don't want a **segmentation fault** to occur in kernel space because your linked list was in an inconsistent state when a processes tried to read or write to your **devices** file!
 
-## DEMO
+## Demo
 [![asciicast](https://asciinema.org/a/2gy0k0y9kBjQorhgZcnqbVp5i.svg)](https://asciinema.org/a/2gy0k0y9kBjQorhgZcnqbVp5i)
