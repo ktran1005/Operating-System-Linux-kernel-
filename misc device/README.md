@@ -2,8 +2,8 @@
 This assignment covers a simple kernel module that implements a misc device.
 
 ## Implementation
-This module will do the following: <br />
-
+This module will do the following:
+ * Tests reading by doing the following:
     * The misc device should be created with a dynamic minor number. <br />
     * The misc device should implement the read and write file operations. <br />
     * The misc device node should show up in **/dev/fakedrive** <br />
