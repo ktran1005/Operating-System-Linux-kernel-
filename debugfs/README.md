@@ -13,5 +13,12 @@ The kernel module will also expose a **debugfs** interface that will allow you t
 
 The module will create a folder in **/sys/kernel/debug** named **vix**. Insidethis folder, the module will create two files: <br />
   * **devices** -- This file should only be readable and writable by theowner (-rw-------).
-    * **Write Behavior**: Writing a string of characters to this file will cause your module to allocate a new **structvix_dev**. The **name** memeber should be
-        initialized to point to a string that contains the same characters that were written to the file.
+    * **Write Behavior**: Writing a string of characters to this file will cause your module to allocate a new **struct vix_dev**. The **name** memeber should be
+        initialized to point to a string that contains the same characters that were written to the file. The **id** member should be set to the smallest unsigned
+        integer that has never been used as an number that gets assigned to a device should be zero. id numbers are never reused. This new struct vix_dev should be 
+        added to the linked list managed by the module.
+    * **Read Behavior**: Reading from devices should produce alist of the current devices that have been added to thelinked list managed by the module. The format should looklike the following:
+    000: webcam <br />
+    001: keyboard <br />
+    002: mouse <br />
+    003: monitor <br />
