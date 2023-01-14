@@ -29,7 +29,7 @@ The module will create a folder in **/sys/kernel/debug** named **vix**. Inside t
 
 When your module is unloaded, it should remove any vix devices that are still in the linked list and free any dynamic memory associated with each one. We don't want memory leaks in kernel space! <br />
  
- **IMPORTANT**: Don't forget that multiple processes could attempt to reador write to your **devices** file in debugfs at the same time! Be sure to protect it using a
+ **IMPORTANT**: Don't forget that multiple processes could attempt to read or write to your **devices** file in debugfs at the same time! Be sure to protect it using a
 **spinlock** when accessing it. You don't want a **segmentation fault** to occur in kernel space because your linked list was in an inconsistent state when a processes tried to read or write to your **devices** file!
 
 ## Demo
