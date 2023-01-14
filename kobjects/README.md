@@ -43,8 +43,7 @@ Writes to the **powersave** attribute should be stored in the **powersave** memb
 
 Reading any of the other read-only attributes should always produce the default values provided in the table provided near the top of this assignment, which were used to initialize the **fakedrive** device object. <br />
 
-When a new fakedrive device is added to the system, it should generate an add uevent -- announcing to userspace that the device exists. Likewise, when a fakedrive
-device is removed from the system, it should generate a remove uevent -- announcing to userspace that the deviceno longer exists. These events can be captured with the following command: **udevadm monitor** <br />
+When a new **fakedrive* device is added to the system, it should generate an **add uevent** -- announcing to userspace that the device exists. Likewise, when a **fakedrive** device is removed from the system, it should generate a **remove uevent** -- announcing to userspace that the deviceno longer exists. These events can be captured with the following command: **udevadm monitor** <br />
 
 ## Demo
 [![asciicast](https://asciinema.org/a/551617.svg)](https://asciinema.org/a/551617)
