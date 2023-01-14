@@ -29,3 +29,12 @@ These four (4) fakedrive devices should belong to a kset named **"fakedrive"**. 
 Setup the attributes of your kobj_type so that once all four (4) fakedrives have been created, the directory structure organization looks like this: <br />
 
 [![Capture-1.png](https://i.postimg.cc/NFW7v5Vv/Capture-1.png)](https://postimg.cc/D4Pbqynx)
+
+As shown, the attributes **capacity, model, and rev** should all show up in a subdirectory named **info** under a given device's directory and should all 
+be read-only by owner, group, and world -- i.e. [-r--r--r--]. <br />
+
+The **powersave** attribute is special -- it should not live in the info subdirectory. Instead, it will live directly in the device's directory, parallel to the
+info subdirectory. The **powersave** attribute should be both readable & writable by owner and group (and world should only be able to read) -- i.e. [-rw-rw-r--]. <br />
+
+Here is the directory tree, again, but this time showing the required filepermissions to the left of the item they apply to: <br />
+[![Capture-2.png](https://i.postimg.cc/d0BbQYwx/Capture-2.png)](https://postimg.cc/R3WsG237)
