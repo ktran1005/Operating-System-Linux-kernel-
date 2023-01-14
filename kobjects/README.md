@@ -21,3 +21,11 @@ your module's init function, create four (4) fakedrive devices named **device0, 
 be initialized with the following values upon creation: <br />
 
 [![Capture.png](https://i.postimg.cc/4NZ5Jh2B/Capture.png)](https://postimg.cc/MXPR5XSQ)
+
+These four (4) fakedrive devices should belong to a kset named **"fakedrive"**. This kset should be visible to userspace at **/sys/kernel/fakedrive.** <br />
+
+
+
+Setup the attributes of your kobj_type so that once all four (4) fakedrives have been created, the directory structure organization looks like this: <br />
+
+[![Capture-1.png](https://i.postimg.cc/NFW7v5Vv/Capture-1.png)](https://postimg.cc/D4Pbqynx)
