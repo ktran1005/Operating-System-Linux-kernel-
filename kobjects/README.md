@@ -6,11 +6,11 @@ attributes. Implement this as kernel module named **kobject.c** <br />
 A **fakedrive** device, is described by the following struct: <br />
 
 ```c
-**struct** fakedrive {
-  **unsigned long** capacity;
-  **const char** *model;
-  **const char** *rev;
-  **struct kobject** kobj;
-  **int** powersave;
+struct fakedrive {
+  unsigned long capacity;
+  const char *model;
+  const char *rev;
+  struct kobject kobj;
+  int powersave;
 };
 ```
