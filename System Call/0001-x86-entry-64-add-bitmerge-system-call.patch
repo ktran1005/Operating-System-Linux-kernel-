@@ -1,0 +1,77 @@
+From 2ae65b267330c20e8f4329a3fbb4a97597e2da14 Mon Sep 17 00:00:00 2001
+From: Charles Tran <kdt57@drexel.edu>
+Date: Wed, 11 May 2022 18:13:25 -0400
+Subject: [PATCH] x86/entry/64: add bitmerge system call
+
+This change includes a new system call which is bitmerge.
+It will accept two 32-bit parameters and return a 64-bit
+whose upper 32 bits are equal to the first parameter
+and whose lower 32 bits are equal to the second parameter.
+If the most significant bit of the resulting merge parameters is set,
+the system call return an error code,
+otherwise, it will return the merge value
+Signed-off-by: Charles Tran <kdt57@drexel.edu>
+---
+ arch/x86/entry/syscalls/syscall_64.tbl |  1 +
+ fs/read_write.c                        | 21 +++++++++++++++++++++
+ include/linux/syscalls.h               |  1 +
+ 3 files changed, 23 insertions(+)
+
+diff --git a/arch/x86/entry/syscalls/syscall_64.tbl b/arch/x86/entry/syscalls/syscall_64.tbl
+index 78672124d28b..810d533f7626 100644
+--- a/arch/x86/entry/syscalls/syscall_64.tbl
++++ b/arch/x86/entry/syscalls/syscall_64.tbl
+@@ -406,5 +406,6 @@
+ 545	x32	execveat		compat_sys_execveat
+ 546	x32	preadv2			compat_sys_preadv64v2
+ 547	x32	pwritev2		compat_sys_pwritev64v2
++548     64      bitmerge                sys_bitmerge
+ # This is the end of the legacy x32 range.  Numbers 548 and above are
+ # not special and are not to be used for x32-specific syscalls.
+diff --git a/fs/read_write.c b/fs/read_write.c
+index 75f764b43418..6fc74c22e19b 100644
+--- a/fs/read_write.c
++++ b/fs/read_write.c
+@@ -644,6 +644,27 @@ SYSCALL_DEFINE3(read, unsigned int, fd, char __user *, buf, size_t, count)
+ 	return ksys_read(fd, buf, count);
+ }
+
++u64 ksys_bitmerge(u32 high_bits, u32 low_bits)
++{
++	u64 ret;
++	u32 flag;
++
++	ret = 0;
++	flag = high_bits >> 31;
++	ret = ret | high_bits;
++	ret = ret << 32;
++	ret = ret | low_bits;
++
++	if (flag == 0)
++		return ret;
++	return -EINVAL;
++}
++
++SYSCALL_DEFINE2(bitmerge, u32, high_bits, u32, low_bits)
++{
++	return ksys_bitmerge(high_bits, low_bits);
++}
++
+ ssize_t ksys_write(unsigned int fd, const char __user *buf, size_t count)
+ {
+ 	struct fd f = fdget_pos(fd);
+diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
+index 7688bc983de5..0c1716eb4bb4 100644
+--- a/include/linux/syscalls.h
++++ b/include/linux/syscalls.h
+@@ -497,6 +497,7 @@ asmlinkage long sys_lseek(unsigned int fd, off_t offset,
+ asmlinkage long sys_read(unsigned int fd, char __user *buf, size_t count);
+ asmlinkage long sys_write(unsigned int fd, const char __user *buf,
+ 			  size_t count);
++asmlinkage long bitmerge(u32 high_bits, u32 low_bits);
+ asmlinkage long sys_readv(unsigned long fd,
+ 			  const struct iovec __user *vec,
+ 			  unsigned long vlen);
+--
+2.35.1
+
