@@ -3,7 +3,7 @@
 In this assignment, I learned how to add a system call to the kernel, commit my changes to the repository of Linux development team  and create a patch file from my commit.
 
 ## Implementation
-This custom system call should: <br />
+This custom system call should:
 	* Be named **bitmarge** <br />
 	* Accept two 32-bit parameters called **high_bits** and **low_bits**. <br />
 	* Return a 64-bit value whose upper 32 bits are equal to **high_bits** and whose lower 32 bits are equal to **low_bits**. <br />
